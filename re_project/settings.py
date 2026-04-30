@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-*bmxs$)1bwbmy3j9(sxmh$i0@ut6spx%!$np@g6y5oc*9xp5f0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
@@ -123,3 +124,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# LOGIN_URL = 'agents:login'
+LOGIN_REDIRECT_URL = 'propertytrack:home'

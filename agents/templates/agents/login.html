@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <title>Login Page</title>
-    <link rel="stylesheet" href="{% static 'chipin/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
 </head>
 <body>
     {% if messages %}
@@ -16,8 +16,12 @@
     <div class="login-container">
         <form action="{% url 'agents:login' %}" method="post">
             {% csrf_token %}
+            
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
+
             <input type="submit" value="Login">
         </form>
     </div>

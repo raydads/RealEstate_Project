@@ -9,16 +9,26 @@ def login_view(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
+
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             login(request, user)
-            next_url = request.GET.get('next', reverse("chipin:home"))
+
+            next_url = request.POST.get("next") or request.GET.get("next")
+
+            if not next_url:
+                next_url = reverse("propertytrack:home")
+
             return HttpResponseRedirect(next_url)
+
         else:
             messages.error(request, "Invalid Credentials.")
+            
     return render(request, "users/login.html")
 
 def logout_view(request):
     logout(request)
     messages.success(request, "Successfully logged out.")
     return redirect('agents:login')
+
