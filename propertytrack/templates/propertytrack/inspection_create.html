@@ -1,15 +1,39 @@
-{% extends 'propertytrack/home.html' %}
-{% block content %}
-<h2>Create Inspection for {{ rental.address }}</h2>
-
-<form method="POST">
-    {% csrf_token %}
-    <div>
-        <label for="date">Inspection Date</label>
-        <input type="date" name="date" required>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create Inspection</title>
+    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="{% static 'propertytrack/logo_90.jpg' %}" alt="Logo">
+        </div>
+        <div class="user-info">
+            <span>{{ request.user.username }}</span>
+            <form action="{% url 'agents:logout' %}" method="post" style="margin: 0; margin-left: 20px;">
+                {% csrf_token %}
+                <button type="submit">Log out</button>
+            </form>
+        </div>
     </div>
-    <button type="submit">Create Inspection</button>
-</form>
+    
+    <h1>Create Inspection for {{ rental.address }}</h1>
 
-<a href="{% url 'propertytrack:home' %}">Back to Properties</a>
-{% endblock %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="datetime-local" name="inspection_date" required>
+        <button type="submit">Create</button>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    
+    <a href="{% url 'propertytrack:rental_detail' rental.id %}"><button>Back</button></a>
+
+</body>
+</html>

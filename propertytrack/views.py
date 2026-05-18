@@ -50,7 +50,7 @@ def rental_update(request, pk):
 def inspection_detail(request, inspection_id):
     inspection = get_object_or_404(Inspection, id=inspection_id)
 
-    return render(request, "propertytrack/inspection_details.html", {
+    return render(request, "propertytrack/inspection_detail.html", {
         "inspection": inspection
     })
 
