@@ -32,7 +32,7 @@ class Rental(models.Model):
     #tenant_phone = models.CharField(max_length=20, blank=True, null=True)
 
     # financial detail block
-    rent_amount = models.DecimalField(max_digits=5, decimal_places=2)
+    rent_amount = models.DecimalField(max_digits=8, decimal_places=2)
     #bond_amount = models.DecimalField(max_digits=10, decimal_places=2)
 
     #timestamps 
@@ -40,3 +40,13 @@ class Rental(models.Model):
 
     def __str__(self):
         return self.address
+
+class Inspection(models.Model):
+    rental = models.ForeignKey(Rental, on_delete=models.CASCADE)
+    inspection_date = models.DateTimeField()
+    notes = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Inspection - {self.rental.address}"
+

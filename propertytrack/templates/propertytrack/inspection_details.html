@@ -1,0 +1,9 @@
+<h2>Inspection Details</h2>
+
+<ul>
+    {% for inspection, info in inspection_share_info.items %}
+        <li>
+            <strong>{{ inspection.rental.address }}</strong> - Date: {{ inspection.inspection_date }}
+        </li>
+    {% endfor %}
+</ul>

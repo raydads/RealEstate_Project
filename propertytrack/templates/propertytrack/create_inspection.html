@@ -1,0 +1,15 @@
+{% extends 'propertytrack/home.html' %}
+{% block content %}
+<h2>Create Inspection for {{ rental.address }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="date">Inspection Date</label>
+        <input type="date" name="date" required>
+    </div>
+    <button type="submit">Create Inspection</button>
+</form>
+
+<a href="{% url 'propertytrack:home' %}">Back to Properties</a>
+{% endblock %}

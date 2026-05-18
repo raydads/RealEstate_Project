@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>propertytrack Homepage</title>
+    <title>Rentals</title>
     <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
 </head>
 <body>
@@ -17,18 +17,27 @@
                 <button type="submit">Log out</button>
             </form>
         </div>
-    </div>   
-
+    </div>
+    
     <div class="content">
+        <h1>Rental Properties</h1>
+        
         <a href="{% url 'propertytrack:rental_create' %}">
             <button>Add Property</button>
         </a>
-
-        <a href="{% url 'propertytrack:rental_list' %}">
-            <button>List of Rentals</button>
-        </a>
+        
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>Address</th>
+                <th>Price/week</th>
+            </tr>
+            {% for rental in rentals %}
+            <tr>
+                <td>{{ rental.address }}</td>
+                <td>${{ rental.rent_amount }}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
-
-    
 </body>
 </html>
