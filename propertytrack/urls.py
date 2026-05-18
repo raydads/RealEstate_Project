@@ -16,6 +16,12 @@ urlpatterns = [
     ),
 
     path(
+        "rentals/<int:pk>/update/",
+        views.rental_update,
+        name="rental_update"
+    ),
+
+    path(
         "inspection/<int:inspection_id>/",
         views.inspection_detail,
         name="inspection_detail"
@@ -26,4 +32,9 @@ urlpatterns = [
         views.rental_list,
         name="rental_list"
     ),
+
+    path(
+        "rentals/<int:pk>/", 
+        views.rental_detail, 
+        name="rental_detail"),
 ]

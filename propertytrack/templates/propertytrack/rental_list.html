@@ -30,11 +30,17 @@
             <tr>
                 <th>Address</th>
                 <th>Price/week</th>
+                <th>Edit Details</th>
             </tr>
             {% for rental in rentals %}
             <tr>
-                <td>{{ rental.address }}</td>
+                <td> {{ rental.address }}</td>
                 <td>${{ rental.rent_amount }}</td>
+                <td>
+                    <a href="{% url 'propertytrack:rental_detail' rental.id %}">
+                        <button>Edit</button>
+                    </a>
+                </td>
             </tr>
             {% endfor %}
         </table>

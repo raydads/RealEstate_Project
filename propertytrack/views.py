@@ -25,6 +25,27 @@ def rental_create(request):
     
     return render(request, 'propertytrack/rental_create.html', {'form': form})
 
+def rental_detail(request, pk):
+    rental = get_object_or_404(Rental, pk=pk)
+    return render(request, 'propertytrack/rental_detail.html', {'rental': rental})
+
+def rental_update(request, pk):
+    rental = get_object_or_404(Rental, pk=pk)
+
+    if request.method == 'POST':
+        address = request.POST.get('address')
+        rent_amount = request.POST.get('rent_amount')
+
+        rental.address = address
+        rental.rent_amount = rent_amount
+        rental.save()
+
+        messages.success(request, "property updated!")
+        return redirect('propertytrack:rental_detail', pk=rental.id)
+    
+    return render(request, 'propertytrack/rental_update.html', {'rental': rental})
+
+
 # @login_required
 def inspection_detail(request, inspection_id):
     inspection = get_object_or_404(Inspection, id=inspection_id)
