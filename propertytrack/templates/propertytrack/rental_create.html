@@ -17,7 +17,9 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save</button>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button type="submit">Save</button>
+            <a href="{% url 'propertytrack:home' %}"><button type="button">Back</button></a>
+        </div>
     </form>
-</body>
 </html>
