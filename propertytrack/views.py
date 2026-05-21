@@ -49,9 +49,11 @@ def rental_update(request, pk):
 # @login_required
 def inspection_detail(request, inspection_id):
     inspection = get_object_or_404(Inspection, id=inspection_id)
+    all_inspections = Inspection.objects.filter(rental=inspection.rental)
 
     return render(request, "propertytrack/inspection_detail.html", {
-        "inspection": inspection
+        "inspection": inspection,
+        'all_inspections': all_inspections
     })
 
 def inspection_create(request, rental_id):
