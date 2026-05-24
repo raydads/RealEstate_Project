@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Prospect</title>
+    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="{% static 'propertytrack/logo_90.jpg' %}" alt="Logo">
+        </div>
+        <div class="user-info">
+            <span>{{ request.user.username }}</span>
+            <form action="{% url 'agents:logout' %}" method="post" style="margin: 0; margin-left: 20px;">
+                {% csrf_token %}
+                <button type="submit">Log out</button>
+            </form>
+        </div>
+    </div>
+    
+    <h1>Add Prospect for {{ inspection.rental.address }}</h1>
+    
+    {% if prospect %}
+        <p>Found: {{ prospect.first_name }} {{ prospect.last_name }}</p>
+    {% endif %}
+    
+    <form method="POST">
+        {% csrf_token %}
+        <input type="tel" name="phone" placeholder="Phone" required>
+        <input type="text" name="first_name" placeholder="First Name" required>
+        <input type="text" name="last_name" placeholder="Last Name" required>
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>

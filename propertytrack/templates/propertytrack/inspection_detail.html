@@ -1,10 +1,8 @@
 <h2>Inspection Details</h2>
 
 <div>
-    <strong>Address</strong> {{ Rental.address }} // doesnt work//
-    {% for insp in all_inspections %} 
-        <li>
-            <strong>Date:</strong> {{ insp.inspection_date }}
-        </li>
-    {% endfor %}
+    <strong>Address:</strong> {{ inspection.rental.address }}
+    <p><strong>Date:</strong> {{ inspection.inspection_date }}</p>
+    
+    <a href="{% url 'prospects:prospect_create' inspection.id %}"><button>Add Prospect</button></a>
 </div>

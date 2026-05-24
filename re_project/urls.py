@@ -21,8 +21,8 @@ from django.http import HttpResponse
 
 urlpatterns = [
     path('', lambda request: redirect('propertytrack:home')),
-    # path('', lambda request: redirect('propertytrack:home')), 
     path('admin/', admin.site.urls),
     path('agents/', include(("agents.urls", "agents"), namespace="agents")),
     path('propertytrack/', include(("propertytrack.urls", "propertytrack"), namespace="propertytrack")),
+    path('prospects/', include('prospects.urls')),
 ]
