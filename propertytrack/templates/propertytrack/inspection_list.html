@@ -1,0 +1,15 @@
+<h1>Inspection for {{ rental.address }} </h1>
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Date</th>
+        <th>Details</th>
+    </tr>
+    {% for inspection in inspections %}
+    <tr>
+        <td>{{ inspection.inspection_date }}</td>
+        <td>
+            <a href="{% url 'propertytrack:inspection_detail' inspection.id %}"><button>View</button></a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

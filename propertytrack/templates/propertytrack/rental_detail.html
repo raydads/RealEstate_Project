@@ -27,5 +27,6 @@
     <a href="{% url 'propertytrack:rental_update' rental.id %}"><button>Edit</button></a>
     <a href="{% url 'propertytrack:inspection_create' rental.id %}"><button>Create Inspection</button></a>
     <a href="{% url 'propertytrack:rental_list' %}"><button>Back</button></a>
+    <a href="{% url 'propertytrack:inspection_list' rental.id %}"><button>View Inspections</button></a>
 </body>
 </html>

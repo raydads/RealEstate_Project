@@ -83,3 +83,9 @@ def inspection_create(request, rental_id):
 def rental_list(request):
     rentals = Rental.objects.all()
     return render(request, 'propertytrack/rental_list.html', {"rentals": rentals})
+
+def inspection_list(request, rental_id):
+    rental = get_object_or_404(Rental, id=rental_id)
+    inspections = Inspection.objects.filter(rental=rental_id)
+
+    return render(request, 'propertytrack/inspection_list.html', {'inspections': inspections, 'rental': rental})

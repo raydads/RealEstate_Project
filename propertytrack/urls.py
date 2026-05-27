@@ -37,4 +37,10 @@ urlpatterns = [
         "rentals/<int:pk>/", 
         views.rental_detail, 
         name="rental_detail"),
+    
+    path(
+        "rental/<int:rental_id>/inspections/",
+        views.inspection_list,
+        name="inspection_list"
+    ),
 ]
