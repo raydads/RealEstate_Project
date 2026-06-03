@@ -42,10 +42,17 @@ class Rental(models.Model):
         return self.address
 
 class Inspection(models.Model):
+    STATUS_CHOICES = [
+        ('scheduled', 'Scheduled'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+    ]
+
     rental = models.ForeignKey(Rental, on_delete=models.CASCADE)
     inspection_date = models.DateTimeField()
     notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='scheduled')
 
     def __str__(self):
         return f"Inspection - {self.rental.address}"

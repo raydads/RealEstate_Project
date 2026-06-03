@@ -92,3 +92,14 @@ def inspection_list(request, rental_id):
 
 def in_inspection(request):
     return render(request, "propertytrack/in_inspection.html") 
+
+def inspection_edit(request, inspection_id):
+    inspection = get_object_or_404(Inspection, id=inspection_id)
+
+    if request.method == 'POST':
+        inspection.status = request.POST.get('status')
+        inspection.save()
+        messages.success(request, "Inspection Status Updated!")
+        return redirect('propertytrack:inspection_detail', inspection_id=inspection.id)
+
+    return render(request, 'propertytrack/inspection_edit.html', {'inspection': inspection})
