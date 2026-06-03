@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Inspections</title>
+    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
+</head>
+<body>
+    <div class="header">
+        <span>{{ request.user.username }}</span>
+        <form action="{% url 'agents:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    </div>
+    
+    <h1>{{ rental.address }}</h1>
+    
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Action</th>
+        </tr>
+        {% for inspection in inspections %}
+        <tr>
+            <td>{{ inspection.inspection_date|date:"d/m/Y" }}</td>
+            <td>{{ inspection.inspection_date|time:"H:i" }}</td>
+            <td>
+                <a href="{% url 'propertytrack:in_inspection' rental.id %}"><button>Start</button></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <a href="{% url 'propertytrack:inspection_create' rental.id %}"><button>Add Inspection</button></a>
+    <a href="{% url 'propertytrack:rental_detail' rental.id %}"><button>Home</button></a>
+    <a href="{% url 'propertytrack:completed_inspections_property' rental.id %}"><button>Completed</button></a>
+</body>
+</html>

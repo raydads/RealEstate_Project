@@ -17,8 +17,11 @@
     <h1>{{ rental.address }}</h1>
     
     {% for inspection in inspections %}
-        <p>{{ inspection.inspection_date }}</p>
+        <p>Date: {{ inspection.inspection_date|date:"d/m/Y" }}</p>
+        <p>Time: {{ inspection.inspection_date|time:"H:i" }}</p>
         <a href="{% url 'prospects:prospect_create' inspection.id %}"><button>Add Prospect</button></a>
     {% endfor %}
+    
+    <a href="{% url 'propertytrack:inspection_list' rental.id %}"><button>Back</button></a>
 </body>
 </html>
