@@ -46,8 +46,8 @@ urlpatterns = [
     ),
 
     path(
-        "in_inspection/",
-        views.in_inspection, 
+        "rentals/<int:rental_id>/in-inspection/",
+         views.in_inspection,
         name="in_inspection"),
     
     path(

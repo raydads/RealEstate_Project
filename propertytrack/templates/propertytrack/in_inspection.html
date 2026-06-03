@@ -2,9 +2,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Inspection In Progress</title>
+    <title>In Inspection</title>
     <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
 </head>
 <body>
+    <div class="header">
+        <span>{{ request.user.username }}</span>
+        <form action="{% url 'agents:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    </div>
+    
+    <h1>{{ rental.address }}</h1>
+    
+    {% for inspection in inspections %}
+        <p>{{ inspection.inspection_date }}</p>
+        <a href="{% url 'prospects:prospect_create' inspection.id %}"><button>Add Prospect</button></a>
+    {% endfor %}
 </body>
 </html>

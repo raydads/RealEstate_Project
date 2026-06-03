@@ -90,8 +90,10 @@ def inspection_list(request, rental_id):
 
     return render(request, 'propertytrack/inspection_list.html', {'inspections': inspections, 'rental': rental})
 
-def in_inspection(request):
-    return render(request, "propertytrack/in_inspection.html") 
+def in_inspection(request, rental_id):
+    rental = get_object_or_404(Rental, id=rental_id)
+    inspections = Inspection.objects.filter(rental=rental)
+    return render(request, 'propertytrack/in_inspection.html', {'rental': rental, 'inspections': inspections})
 
 def inspection_edit(request, inspection_id):
     inspection = get_object_or_404(Inspection, id=inspection_id)
