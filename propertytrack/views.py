@@ -89,3 +89,6 @@ def inspection_list(request, rental_id):
     inspections = Inspection.objects.filter(rental=rental_id)
 
     return render(request, 'propertytrack/inspection_list.html', {'inspections': inspections, 'rental': rental})
+
+def in_inspection(request):
+    return render(request, "propertytrack/in_inspection.html") 
