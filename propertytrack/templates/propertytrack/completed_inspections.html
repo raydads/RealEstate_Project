@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Completed Inspections</title>
+    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
+</head>
+<body>
+    <div class="header">
+        <span>{{ request.user.username }}</span>
+        <form action="{% url 'agents:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    </div>
+    
+    <h1>Completed Inspections</h1>
+    
+    {% for inspection in inspections %}
+        <p>{{ inspection.rental.address }} - {{ inspection.inspection_date }}</p>
+        <a href="{% url 'propertytrack:inspection_statistics' inspection.id %}"><button>Statistics</button></a>
+    {% endfor %}
+</body>
+</html>

@@ -56,5 +56,15 @@ urlpatterns = [
         name="inspection_edit"
     ),
 
+    path(
+        "inspection/<int:inspection_id>/statistics/",
+        views.inspection_statistics,
+        name="inspection_statistics"
+    ),
+
+    path("inspections/completed/",
+     views.completed_inspections,
+      name="completed_inspections"),
+
 
 ]

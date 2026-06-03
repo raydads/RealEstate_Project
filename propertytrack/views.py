@@ -103,3 +103,13 @@ def inspection_edit(request, inspection_id):
         return redirect('propertytrack:inspection_detail', inspection_id=inspection.id)
 
     return render(request, 'propertytrack/inspection_edit.html', {'inspection': inspection})
+
+def completed_inspections(request):
+    inspections = Inspection.objects.all()
+    completed = [i for i in inspections if i.get_status() == 'completed']
+    return render(request, 'propertytrack/completed_inspections.html', {'inspections': completed})
+
+def inspection_statistics(request, inspection_id):
+    inspection = get_object_or_404(Inspection, id=inspection_id)
+    prospects = inspection.prospects.all()
+    return render(request, 'propertytrack/inspection_statistics.html', {'inspection': inspection, 'prospects': prospects})

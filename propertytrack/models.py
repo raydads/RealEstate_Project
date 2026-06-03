@@ -56,4 +56,12 @@ class Inspection(models.Model):
 
     def __str__(self):
         return f"Inspection - {self.rental.address}"
-
+    
+    def get_status(self):
+        now = timezone.now()
+        if now < self.inspection_date:
+            return 'scheduled'
+        elif now > self.inspection_date + timezone.timedelta(hours=2):
+            return 'completed'
+        else:
+            return 'in_progress'

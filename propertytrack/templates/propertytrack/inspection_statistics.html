@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Statistics</title>
+    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
+</head>
+<body>
+    <div class="header">
+        <span>{{ request.user.username }}</span>
+        <form action="{% url 'agents:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    </div>
+    
+    <h1>{{ inspection.rental.address }}</h1>
+    <p>Prospects: {{ prospects.count }}</p>
+    
+    {% for prospect in prospects %}
+        <p>{{ prospect.first_name }} {{ prospect.last_name }} - {{ prospect.phone }}</p>
+    {% endfor %}
+</body>
+</html>
