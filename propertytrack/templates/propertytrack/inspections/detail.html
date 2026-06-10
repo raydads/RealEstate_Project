@@ -4,7 +4,7 @@
     <strong>Address:</strong> {{ inspection.rental.address }}
     <p><strong>Date:</strong> {{ inspection.inspection_date }}</p>
     
-    <a href="{% url 'prospects:prospect_create' inspection.id %}"><button>Add Prospect</button></a>
+    <a href="{% url 'prospects:prospect_phone_check' inspection.id %}"><button>Add Prospect</button></a>
     <a href="{% url 'propertytrack:inspection_list' inspection.rental.id %}"><button>View Inspections</button></a>
     <a href="{% url 'propertytrack:home' %}"><button>Home</button></a>
     <a href="{% url 'propertytrack:rental_detail' inspection.rental.id %}"><button>Property Details</button></a>  

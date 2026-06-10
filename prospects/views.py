@@ -4,43 +4,44 @@ from django.contrib import messages
 from .models import Prospect
 from propertytrack.models import Inspection
 from .forms import ProspectForm
-# Create your views here.
 
-def prospect_create(request, inspection_id):
+def prospect_phone_check(request, inspection_id):
     inspection = get_object_or_404(Inspection, id=inspection_id)
-    prospect = None
     
     if request.method == 'POST':
         phone = request.POST.get('phone')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        
-        # Search for existing prospect by phone
         prospect = Prospect.objects.filter(phone=phone).first()
         
-        if not prospect:
-            # Create new prospect if not found
-            prospect = Prospect.objects.create(
-                phone=phone,
-                first_name=first_name,
-                last_name=last_name
-            )
-        
-        prospect.inspections.add(inspection)
-        messages.success(request, f"Prospect {prospect.first_name} added!")
-        
-        return redirect('propertytrack:inspection_detail', inspection_id=inspection.id)
+        if prospect:
+            prospect.inspections.add(inspection)
+            messages.success(request, f"{prospect.first_name} {prospect.last_name} already exists — added to inspection.")
+            return redirect('propertytrack:in_inspection', rental_id=inspection.rental.id)
+        else:
+            return redirect('prospects:prospect_create', inspection_id=inspection_id, phone=phone)
     
-    return render(request, 'prospects/prospect_create.html', {'inspection': inspection, 'prospect': prospect})
+    return render(request, 'prospects/prospect_phone_check.html', {'inspection': inspection})
+
+def prospect_create(request, inspection_id, phone):
+    inspection = get_object_or_404(Inspection, id=inspection_id)
+    
+    if request.method == 'POST':
+        prospect = Prospect.objects.create(
+            phone=phone,
+            first_name=request.POST.get('first_name'),
+            last_name=request.POST.get('last_name'),
+        )
+        prospect.inspections.add(inspection)
+        messages.success(request, f"{prospect.first_name} added!")
+        return redirect('propertytrack:in_inspection', rental_id=inspection.rental.id)
+    
+    return render(request, 'prospects/prospect_create.html', {'inspection': inspection, 'phone': phone})
 
 def prospect_search(request):
     prospects = []
     if request.method == 'POST':
         search_value = request.POST.get('search_value')
         prospects = Prospect.objects.filter(phone__icontains=search_value) | Prospect.objects.filter(first_name__icontains=search_value)
-    
     return render(request, 'prospects/prospect_search.html', {'prospects': prospects})
-
 
 def prospect_update(request, prospect_id):
     prospect = get_object_or_404(Prospect, id=prospect_id)

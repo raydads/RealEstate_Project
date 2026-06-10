@@ -21,7 +21,7 @@
         <p>{{ prospect.first_name }} {{ prospect.last_name }} - {{ prospect.phone }}</p>
     {% endfor %}
 
-    <a href="{% url 'prospects:prospect_create' inspection.id %}"><button>Add Prospect</button></a>
+    <a href="{% url 'prospects:prospect_phone_check' inspection.id %}"><button>Add Prospect</button></a>
     <a href="{% url 'propertytrack:in_inspection' inspection.rental.id %}"><button>Back</button></a>
 </body>
 </html>
