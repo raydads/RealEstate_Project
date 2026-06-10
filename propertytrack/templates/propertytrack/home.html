@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <title>propertytrack Homepage</title>
-    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'propertytrack/style.css' %}">
 </head>
 <body>
     <div class="header">
@@ -20,19 +20,22 @@
     </div>   
 
     <div class="content">
-        <a href="{% url 'propertytrack:rental_create' %}">
+        <a href="{% url 'propertytrack:rental_create' %}" style="text-decoration: none;">
             <button>Add Property</button>
         </a>
 
-        <a href="{% url 'propertytrack:rental_list' %}">
+        <a href="{% url 'propertytrack:rental_list' %}" style="text-decoration: none;">
             <button>List of Rentals</button>
         </a>
 
-        <a href="{% url 'propertytrack:completed_inspections' %}">
+        <a href="{% url 'propertytrack:completed_inspections' %}" style="text-decoration: none;">
             <button>Completed Inspections</button>
+        </a>
+
+        <a href="{% url 'prospects:prospect_search' %}">
+            <button>Search Prospects</button>
         </a>
     </div>
 
-    
 </body>
 </html>

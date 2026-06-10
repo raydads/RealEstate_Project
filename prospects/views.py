@@ -40,3 +40,21 @@ def prospect_search(request):
         prospects = Prospect.objects.filter(phone__icontains=search_value) | Prospect.objects.filter(first_name__icontains=search_value)
     
     return render(request, 'prospects/prospect_search.html', {'prospects': prospects})
+
+
+def prospect_update(request, prospect_id):
+    prospect = get_object_or_404(Prospect, id=prospect_id)
+    if request.method == 'POST':
+        prospect.first_name = request.POST.get('first_name')
+        prospect.last_name = request.POST.get('last_name')
+        prospect.phone = request.POST.get('phone')
+        prospect.notes = request.POST.get('notes')
+        prospect.save()
+        messages.success(request, "Prospect updated!")
+        return redirect('prospects:prospect_detail', prospect_id=prospect.id)
+    return render(request, 'prospects/prospect_update.html', {'prospect': prospect})
+
+def prospect_detail(request, prospect_id):
+    prospect = get_object_or_404(Prospect, id=prospect_id)
+    inspections = prospect.inspections.all()
+    return render(request, 'prospects/prospect_detail.html', {'prospect': prospect, 'inspections': inspections})

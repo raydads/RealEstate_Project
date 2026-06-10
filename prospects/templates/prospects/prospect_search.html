@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Search Prospects</title>
+    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
+</head>
+<body>
+    <div class="header">
+        <span>{{ request.user.username }}</span>
+        <form action="{% url 'agents:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    </div>
+
+    <h1>Search Prospects</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="search_value" placeholder="Name or phone">
+        <button type="submit">Search</button>
+    </form>
+
+    {% for prospect in prospects %}
+        <p>{{ prospect.first_name }} {{ prospect.last_name }} — {{ prospect.phone }}
+        <a href="{% url 'prospects:prospect_detail' prospect.id %}"><button>View</button></a></p>
+    {% empty %}
+        {% if request.method == 'POST' %}
+            <p>No prospects found.</p>
+        {% endif %}
+    {% endfor %}
+
+    <a href="{% url 'propertytrack:home' %}"><button>Back</button></a>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Prospect</title>
+    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
+</head>
+<body>
+    <div class="header">
+        <span>{{ request.user.username }}</span>
+        <form action="{% url 'agents:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    </div>
+
+    <h1>Edit Prospect</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>First name: <input type="text" name="first_name" value="{{ prospect.first_name }}"></p>
+        <p>Last name: <input type="text" name="last_name" value="{{ prospect.last_name }}"></p>
+        <p>Phone: <input type="text" name="phone" value="{{ prospect.phone }}"></p>
+        <p>Notes: <textarea name="notes">{{ prospect.notes }}</textarea></p>
+        <button type="submit">Save</button>
+    </form>
+
+    <a href="{% url 'prospects:prospect_detail' prospect.id %}"><button>Cancel</button></a>
+</body>
+</html>

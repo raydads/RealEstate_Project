@@ -64,18 +64,7 @@
     color: green;
 }
 
-/* Basic button styling (for general use) */
-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
+
 
 /* General button hover effect */
 button:hover {

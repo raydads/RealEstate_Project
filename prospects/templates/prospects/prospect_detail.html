@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ prospect.first_name }} {{ prospect.last_name }}</title>
+    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
+</head>
+<body>
+    <div class="header">
+        <span>{{ request.user.username }}</span>
+        <form action="{% url 'agents:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    </div>
+
+    <h1>{{ prospect.first_name }} {{ prospect.last_name }}</h1>
+    <p>Phone: {{ prospect.phone }}</p>
+    <p>Added: {{ prospect.created_at|date:"d/m/Y" }}</p>
+
+    {% if prospect.notes %}
+        <p>Notes: {{ prospect.notes }}</p>
+    {% endif %}
+
+    <h2>Inspections attended</h2>
+    {% for inspection in inspections %}
+        <p>{{ inspection.rental.address }} — {{ inspection.inspection_date|date:"d/m/Y" }} at {{ inspection.inspection_date|time:"H:i" }}</p>
+    {% empty %}
+        <p>No inspections recorded.</p>
+    {% endfor %}
+
+    <a href="{% url 'prospects:prospect_update' prospect.id %}"><button>Edit</button></a>
+    <a href="{% url 'prospects:prospect_search' %}"><button>Back</button></a>
+</body>
+</html>
