@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Rental, Inspection
 from .forms import RentalCreationForm
+from django.utils import timezone
 
 def home(request):
     return render(request, "propertytrack/home.html") 
@@ -48,6 +49,11 @@ def inspection_list(request, rental_id):
     inspections = Inspection.objects.filter(rental=rental)
     active = [i for i in inspections if i.get_status() in ['scheduled', 'in_progress']]
     return render(request, 'propertytrack/inspections/list.html', {'inspections': active, 'rental': rental})
+
+def upcoming_inspections(request):
+    now = timezone.now()
+    inspections = Inspection.objects.filter(inspection_date__gte=now).order_by('inspection_date')
+    return render(request, 'propertytrack/inspections/upcoming.html', {'inspections': inspections})
 
 def inspection_create(request, rental_id):
     rental = get_object_or_404(Rental, id=rental_id)

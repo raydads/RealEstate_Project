@@ -26,4 +26,6 @@ urlpatterns = [
     path("inspection/<int:inspection_id>/statistics/", views.inspection_statistics, name="inspection_statistics"),
     
     path("inspections/completed/", views.completed_inspections, name="completed_inspections"),
+
+    path('inspections/upcoming/', views.upcoming_inspections, name='upcoming_inspections'),
 ]

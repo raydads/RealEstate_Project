@@ -21,6 +21,17 @@ def prospect_phone_check(request, inspection_id):
     
     return render(request, 'prospects/prospect_phone_check.html', {'inspection': inspection})
 
+def prospect_found(request, inspection_id, prospect_id):
+    inspection = get_object_or_404(Inspection, id=inspection_id)
+    prospect = get_object_or_404(Prospect, id=prospect_id)
+    
+    if request.method == 'POST':
+        prospect.inspections.add(inspection)
+        messages.success(request, f"{prospect.first_name} signed in!")
+        return redirect('propertytrack:in_inspection', rental_id=inspection.rental.id)
+    
+    return render(request, 'prospects/prospect_found.html', {'inspection': inspection, 'prospect': prospect})
+
 def prospect_create(request, inspection_id, phone):
     inspection = get_object_or_404(Inspection, id=inspection_id)
     
