@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}PropertyTrack{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
+</head>
+<body>
+
+    <div class="header">
+        <div class="user-info">
+            <span>{{ request.user.username }}</span>
+            <form action="{% url 'agents:logout' %}" method="post" style="margin: 0;">
+                {% csrf_token %}
+                <button type="submit">Log out</button>
+            </form>
+        </div>
+    </div>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="page">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

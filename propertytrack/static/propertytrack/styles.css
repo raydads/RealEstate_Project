@@ -1,0 +1,404 @@
+/* ============================================================
+   BASE & TOKENS
+   ============================================================ */
+
+   *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Palette */
+    --color-bg:         #FAFAF9;
+    --color-surface:    #FFFFFF;
+    --color-border:     #E4E4E7;
+    --color-border-mid: #D1D1D6;
+    --color-text:       #18181B;
+    --color-muted:      #71717A;
+    --color-accent:     #2563EB;
+    --color-accent-hover: #1D4ED8;
+    --color-success:    #16A34A;
+    --color-danger:     #DC2626;
+
+    /* Spacing scale (8px base) */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+
+    /* Radii */
+    --radius-sm:  6px;
+    --radius-md:  10px;
+    --radius-lg:  14px;
+
+    /* Typography */
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-mono: "SF Mono", "Fira Code", "Fira Mono", monospace;
+}
+
+/* ============================================================
+   DOCUMENT
+   ============================================================ */
+
+body {
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-surface);
+    padding: var(--space-4) var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo img {
+    max-height: 32px;
+    display: block;
+}
+
+/* ============================================================
+   USER INFO
+   ============================================================ */
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 14px;
+}
+
+.user-info span {
+    color: var(--color-muted);
+    font-weight: 400;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+button,
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-mid);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    line-height: 1.4;
+}
+
+button:hover,
+.btn:hover {
+    background-color: var(--color-bg);
+    border-color: var(--color-text);
+}
+
+button:focus-visible,
+.btn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* Primary variant */
+.btn-primary,
+.user-info button {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #FFFFFF;
+}
+
+.btn-primary:hover,
+.user-info button:hover {
+    background-color: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+    color: #FFFFFF;
+}
+
+/* Danger variant */
+.btn-danger {
+    background-color: transparent;
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+}
+
+.btn-danger:hover {
+    background-color: var(--color-danger);
+    color: #FFFFFF;
+}
+
+/* ============================================================
+   LINKS
+   ============================================================ */
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+a:hover {
+    color: var(--color-accent-hover);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* ============================================================
+   MESSAGES / ALERTS
+   ============================================================ */
+
+.messages {
+    list-style: none;
+    margin: var(--space-4) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.messages li {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    border: 1px solid transparent;
+    border-left-width: 3px;
+}
+
+.messages li.error {
+    background-color: #FEF2F2;
+    border-color: #FECACA;
+    border-left-color: var(--color-danger);
+    color: #991B1B;
+}
+
+.messages li.success {
+    background-color: #F0FDF4;
+    border-color: #BBF7D0;
+    border-left-color: var(--color-success);
+    color: #14532D;
+}
+
+/* Default message if no class is specified */
+.messages li:not(.error):not(.success) {
+    background-color: #EFF6FF;
+    border-color: #BFDBFE;
+    border-left-color: var(--color-accent);
+    color: #1E3A8A;
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+
+.card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    max-width: 720px;
+}
+
+.card + .card {
+    margin-top: var(--space-4);
+}
+
+/* ============================================================
+   ROWS / LAYOUT HELPERS
+   ============================================================ */
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+}
+
+.row + .row {
+    border-top: 1px solid var(--color-border);
+}
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-muted);
+    margin-bottom: var(--space-1);
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    font-family: var(--font);
+    font-size: 15px;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-mid);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-muted);
+}
+
+/* ============================================================
+   TYPOGRAPHY UTILITIES
+   ============================================================ */
+
+.text-muted   { color: var(--color-muted); }
+.text-sm      { font-size: 13px; }
+.text-lg      { font-size: 18px; }
+.font-medium  { font-weight: 500; }
+
+h1, h2, h3, h4 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--color-text);
+}
+
+h1 { font-size: 28px; }
+h2 { font-size: 22px; }
+h3 { font-size: 18px; }
+h4 { font-size: 15px; }
+
+/* ============================================================
+   PAGE WRAPPER
+   ============================================================ */
+
+.page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-6);
+}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+thead th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+}
+
+tbody td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover td {
+    background-color: var(--color-bg);
+}
+
+/* ============================================================
+   STATUS BADGES
+   ============================================================ */
+
+.badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 99px;
+    letter-spacing: 0.02em;
+}
+
+.badge-scheduled  { background: #EFF6FF; color: #1D4ED8; }
+.badge-inprogress { background: #FFFBEB; color: #B45309; }
+.badge-completed  { background: #F0FDF4; color: #15803D; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 640px) {
+    .header {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .page {
+        padding: var(--space-6) var(--space-4);
+    }
+
+    .card {
+        padding: var(--space-4);
+    }
+
+    h1 { font-size: 22px; }
+    h2 { font-size: 18px; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+    }
+}

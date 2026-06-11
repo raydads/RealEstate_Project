@@ -28,7 +28,11 @@ def rental_list(request):
 
 def rental_detail(request, pk):
     rental = get_object_or_404(Rental, pk=pk)
-    return render(request, 'propertytrack/rentals/detail.html', {'rental': rental})
+    inspections = Inspection.objects.filter(rental=rental).order_by('inspection_date')
+    return render(request, 'propertytrack/rentals/detail.html', {
+        'rental': rental,
+        'inspections': inspections,
+    })
 
 def rental_update(request, pk):
     rental = get_object_or_404(Rental, pk=pk)

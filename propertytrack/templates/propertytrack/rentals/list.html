@@ -1,51 +1,41 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Rentals</title>
-    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
-</head>
-<body>
-    <div class="header">
-        <div class="logo">
-            <img src="{% static 'propertytrack/logo_90.jpg' %}" alt="Logo">
-        </div>
-        <div class="user-info">
-            <span>{{ request.user.username }}</span>
-            <form action="{% url 'agents:logout' %}" method="post" style="margin: 0; margin-left: 20px;">
-                {% csrf_token %}
-                <button type="submit">Log out</button>
-            </form>
-        </div>
-    </div>
-    
-    <div class="content">
-        <h1>Rental Properties</h1>
+{% extends 'propertytrack/base.html' %}
+{% block title %}Rental Properties{% endblock %}
 
-        <a href="{% url 'propertytrack:home' %}"><button>Home</button></a>
-        
-        <a href="{% url 'propertytrack:rental_create' %}">
-            <button>Add Property</button>
-        </a>
-        
-        <table border="1" cellpadding="10">
+{% block content %}
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>Rental properties</h2>
+    <div style="display: flex; gap: 8px;">
+        <a href="{% url 'propertytrack:rental_create' %}" class="btn btn-primary">Add property</a>
+        <a href="{% url 'propertytrack:home' %}" class="btn">Home</a>
+    </div>
+</div>
+
+<div class="table-wrap">
+    {% if rentals %}
+    <table>
+        <thead>
             <tr>
                 <th>Address</th>
-                <th>Price/week</th>
-                <th>Edit Details</th>
+                <th>Price / week</th>
+                <th></th>
             </tr>
+        </thead>
+        <tbody>
             {% for rental in rentals %}
             <tr>
-                <td> {{ rental.address }}</td>
+                <td>{{ rental.address }}</td>
                 <td>${{ rental.rent_amount }}</td>
-                <td>
-                    <a href="{% url 'propertytrack:rental_detail' rental.id %}">
-                        <button>Edit</button>
-                    </a>
+                <td style="text-align: right;">
+                    <a href="{% url 'propertytrack:rental_detail' rental.id %}" class="btn btn-sm">View</a>
                 </td>
             </tr>
             {% endfor %}
-        </table>
-    </div>
-</body>
-</html>
+        </tbody>
+    </table>
+    {% else %}
+    <p style="padding: 20px; color: var(--color-muted); font-size: 14px;">No properties yet. Add one to get started.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,45 +1,13 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>propertytrack Homepage</title>
-    <link rel="stylesheet" href="{% static 'propertytrack/style.css' %}">
-</head>
-<body>
-    <div class="header">
-        <div class="logo">
-            <img src="{% static 'propertytrack/logo_90.jpg' %}" alt="Logo">
-        </div>
-        <div class="user-info">
-            <span>{{ request.user.username }}</span>
-            <form action="{% url 'agents:logout' %}" method="post" style="margin: 0; margin-left: 20px;">
-                {% csrf_token %}
-                <button type="submit">Log out</button>
-            </form>
-        </div>
-    </div>   
+{% extends 'propertytrack/base.html' %}
 
-    <div class="content">
-        <a href="{% url 'propertytrack:rental_create' %}" style="text-decoration: none;">
-            <button>Add Property</button>
-        </a>
+{% block title %}PropertyTrack{% endblock %}
 
-        <a href="{% url 'propertytrack:rental_list' %}" style="text-decoration: none;">
-            <button>List of Rentals</button>
-        </a>
-
-        <a href="{% url 'propertytrack:completed_inspections' %}" style="text-decoration: none;">
-            <button>Completed Inspections</button>
-        </a>
-
-        <a href="{% url 'prospects:prospect_search' %}">
-            <button>Search Prospects</button>
-        </a>
-
-        <a href="{% url 'propertytrack:upcoming_inspections' %}">
-            <button>Upcoming Inspections</button>
-        </a>
-    </div>
-
-</body>
-</html>
+{% block content %}
+<div style="display: flex; gap: 8px; flex-wrap: wrap;">
+    <a href="{% url 'propertytrack:rental_create' %}" class="btn btn-primary">Add property</a>
+    <a href="{% url 'propertytrack:rental_list' %}" class="btn">List of rentals</a>
+    <a href="{% url 'propertytrack:completed_inspections' %}" class="btn">Completed inspections</a>
+    <a href="{% url 'prospects:prospect_search' %}" class="btn">Search prospects</a>
+    <a href="{% url 'propertytrack:upcoming_inspections' %}" class="btn">Upcoming inspections</a>
+</div>
+{% endblock %}
