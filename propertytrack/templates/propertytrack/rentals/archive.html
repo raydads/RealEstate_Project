@@ -1,15 +1,11 @@
 {% extends 'propertytrack/base.html' %}
-{% block title %}Rental Properties{% endblock %}
+{% block title %}Archived Properties{% endblock %}
 
 {% block content %}
 
 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-    <h2>Rental properties</h2>
-    <div style="display:flex; gap:8px;">
-        <a href="{% url 'propertytrack:rental_create' %}" class="btn btn-primary">Add property</a>
-        <a href="{% url 'propertytrack:rental_archive_list' %}" class="btn">View archived</a>
-        <a href="{% url 'propertytrack:home' %}" class="btn">Home</a>
-    </div>
+    <h2>Archived properties</h2>
+    <a href="{% url 'propertytrack:rental_list' %}" class="btn">Back to market</a>
 </div>
 
 <div class="table-wrap">
@@ -29,17 +25,14 @@
                 <td>${{ rental.rent_amount }}</td>
                 <td style="text-align:right;">
                     <div style="display:flex; gap:6px; justify-content:flex-end;">
-                        <a href="{% url 'propertytrack:rental_detail' rental.id %}" class="btn btn-sm">View</a>
-
-                        <form method="POST" action="{% url 'propertytrack:rental_archive' rental.id %}" style="display:inline;">
+                        <form method="POST" action="{% url 'propertytrack:rental_unarchive' rental.id %}" style="display:inline;">
                             {% csrf_token %}
-                            <input type="hidden" name="source" value="list">
-                            <button type="submit" class="btn btn-sm" onclick="return confirm('Archive this property?')">Archive</button>
+                            <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Restore this property to the market?')">Restore</button>
                         </form>
 
                         <form method="POST" action="{% url 'propertytrack:rental_delete' rental.id %}" style="display:inline;">
                             {% csrf_token %}
-                            <input type="hidden" name="source" value="list">
+                            <input type="hidden" name="source" value="archive">
                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Permanently delete this property? This cannot be undone.')">Delete</button>
                         </form>
                     </div>
@@ -49,7 +42,7 @@
         </tbody>
     </table>
     {% else %}
-    <p style="padding:20px; color:var(--color-muted); font-size:14px;">No active properties. <a href="{% url 'propertytrack:rental_create' %}">Add one</a> or <a href="{% url 'propertytrack:rental_archive_list' %}">check the archive</a>.</p>
+    <p style="padding:20px; color:var(--color-muted); font-size:14px;">No archived properties.</p>
     {% endif %}
 </div>
 

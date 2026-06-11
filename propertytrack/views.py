@@ -15,16 +15,55 @@ def rental_create(request):
     if request.method == 'POST':
         form = RentalCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Property created!")
-            return redirect('propertytrack:home')
+            rental = form.save(commit=False)
+            destination = request.POST.get('destination', 'market')
+            rental.is_archived = (destination == 'archive')
+            rental.save()
+            if rental.is_archived:
+                messages.success(request, "Property added to archive.")
+            else:
+                messages.success(request, "Property added to market.")
+            return redirect('propertytrack:rental_list')
     else:
         form = RentalCreationForm()
     return render(request, 'propertytrack/rentals/create.html', {'form': form})
 
 def rental_list(request):
-    rentals = Rental.objects.all()
-    return render(request, 'propertytrack/rentals/list.html', {"rentals": rentals})
+    rentals = Rental.objects.filter(is_archived=False)
+    return render(request, 'propertytrack/rentals/list.html', {'rentals': rentals})
+
+def rental_archive_list(request):
+    rentals = Rental.objects.filter(is_archived=True)
+    return render(request, 'propertytrack/rentals/archive.html', {'rentals': rentals})
+
+def rental_archive(request, pk):
+    rental = get_object_or_404(Rental, pk=pk)
+    if request.method == 'POST':
+        rental.is_archived = True
+        rental.save()
+        messages.success(request, f'"{rental.address}" has been archived.')
+        return redirect('propertytrack:rental_list')
+    return redirect('propertytrack:rental_list')
+
+def rental_unarchive(request, pk):
+    rental = get_object_or_404(Rental, pk=pk)
+    if request.method == 'POST':
+        rental.is_archived = False
+        rental.save()
+        messages.success(request, f'"{rental.address}" is back on the market.')
+        return redirect('propertytrack:rental_archive_list')
+    return redirect('propertytrack:rental_archive_list')
+
+def rental_delete(request, pk):
+    rental = get_object_or_404(Rental, pk=pk)
+    if request.method == 'POST':
+        rental.delete()
+        messages.success(request, "Property permanently deleted.")
+        source = request.POST.get('source', 'list')
+        if source == 'archive':
+            return redirect('propertytrack:rental_archive_list')
+        return redirect('propertytrack:rental_list')
+    return redirect('propertytrack:rental_list')
 
 def rental_detail(request, pk):
     rental = get_object_or_404(Rental, pk=pk)

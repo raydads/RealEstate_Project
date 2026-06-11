@@ -1,25 +1,41 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create Property</title>
-    <link rel="stylesheet" href="{% static 'propertytrack/styles.css' %}">
-</head>
-<body>
-    <h1>Add New Property</h1>
-    
-    {% if messages %}
-        {% for message in messages %}
-            <p style="color: green;">{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-    
-    <form method="post">
+{% extends 'propertytrack/base.html' %}
+{% block title %}Add Property{% endblock %}
+
+{% block content %}
+
+<div class="card" style="max-width:480px;">
+    <h2 style="margin-bottom:20px;">Add property</h2>
+
+    <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <div style="display: flex; gap: 10px; margin-top: 10px;">
-            <button type="submit">Save</button>
-            <a href="{% url 'propertytrack:home' %}"><button type="button">Back</button></a>
+
+        <div style="margin-bottom:16px;">
+            <label for="id_address">Address</label>
+            {{ form.address }}
+        </div>
+
+        <div style="margin-bottom:24px;">
+            <label for="id_rent_amount">Weekly rent ($)</label>
+            {{ form.rent_amount }}
+        </div>
+
+        <div style="margin-bottom:24px;">
+            <label style="margin-bottom:10px;">Add to</label>
+            <div style="display:flex; gap:8px;">
+                <label style="display:flex; align-items:center; gap:8px; font-size:14px; font-weight:400; text-transform:none; letter-spacing:0; color:var(--color-text); cursor:pointer;">
+                    <input type="radio" name="destination" value="market" checked style="width:auto;"> On the market
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:14px; font-weight:400; text-transform:none; letter-spacing:0; color:var(--color-text); cursor:pointer;">
+                    <input type="radio" name="destination" value="archive" style="width:auto;"> Archive
+                </label>
+            </div>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+            <button type="submit" class="btn btn-primary">Save property</button>
+            <a href="{% url 'propertytrack:rental_list' %}" class="btn">Cancel</a>
         </div>
     </form>
-</html>
+</div>
+
+{% endblock %}
